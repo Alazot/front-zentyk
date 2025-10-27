@@ -1,16 +1,17 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: false,
   content: [
-    './pages/**/*.{js,ts,jsx,tsx}', // Escanea todos los archivos de páginas
-    './components/**/*.{js,ts,jsx,tsx}', // Escanea componentes
+    './pages/**/*.{js,ts,jsx,tsx}',
+    './components/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
     extend: {
       colors: {
-        primary: '#0B1F3F', // Azul oscuro, profesional
-        secondary: '#00D1FF', // Verde/Celeste moderno
-        accent: '#FFD700', // Dorado, alto impacto
-        background: '#F5F7FA', // Fondo neutro
+        primary: '#0B1F3F',
+        secondary: '#00D1FF',
+        accent: '#FFD700',
+        background: '#F5F7FA',
       },
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
@@ -32,7 +33,7 @@ module.exports = {
         },
       },
       screens: {
-        xs: '480px', // Para móviles pequeños
+        xs: '480px',
         '2xl': '1536px',
       },
     },
