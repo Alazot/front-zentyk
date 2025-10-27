@@ -1,7 +1,6 @@
 'use client';
 
 import { useSmoothScroll } from './../../hooks/useSmoothScroll';
-import React from 'react';
 
 export default function Footer() {
   const { smoothScroll } = useSmoothScroll();
@@ -40,18 +39,18 @@ export default function Footer() {
             </li>
             <li>
               <button
-                onClick={() => smoothScroll('servicesId')}
-                className="hover:text-[#00D1FF] transition"
-              >
-                Servicios
-              </button>
-            </li>
-            <li>
-              <button
                 onClick={() => smoothScroll('valuesId')}
                 className="hover:text-[#00D1FF] transition"
               >
                 Valores
+              </button>
+            </li>
+            <li>
+              <button
+                onClick={() => smoothScroll('servicesId')}
+                className="hover:text-[#00D1FF] transition"
+              >
+                Servicios
               </button>
             </li>
             <li>

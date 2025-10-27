@@ -30,6 +30,11 @@ const valuesCards = [
     description: 'Innovar no es hacer más, es hacer mejor.',
     image: '/images/values/innovation.png',
   },
+  {
+    title: 'Colaboración',
+    description: 'El conocimiento cobra fuerza cuando se comparte.',
+    image: '/images/values/collaboration.png',
+  },
 ];
 
 export default function ValuesCard() {

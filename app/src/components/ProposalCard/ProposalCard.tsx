@@ -30,7 +30,7 @@ export default function ProposalCard() {
             }}
             style={
               {
-                left: `${12 + i * 18}%`,
+                left: `${11 + i * 18}%`,
                 top: `${32 + (i % 1) * 30}%`,
                 position: 'absolute',
               } as React.CSSProperties

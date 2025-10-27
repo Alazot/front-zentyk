@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useMemo } from 'react';
+import { useRef, useMemo, useEffect } from 'react';
 import * as THREE from 'three';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
@@ -24,7 +24,6 @@ const Particles: React.FC<ParticleProps> = ({
 }) => {
   const pointsRef = useRef<THREE.Points>(null!);
 
-  // Generar posiciones de partículas
   const particlesPosition = useMemo(() => {
     const positions = new Float32Array(count * 3);
     const aspect = window.innerWidth / window.innerHeight;
@@ -41,20 +40,17 @@ const Particles: React.FC<ParticleProps> = ({
     return positions;
   }, [count]);
 
-  // Velocidades aleatorias para el movimiento ondulante
   const randomSpeeds = useMemo(() => {
     const speeds = new Float32Array(count);
     for (let i = 0; i < count; i++) speeds[i] = Math.random() * 0.5 + 0.5;
     return speeds;
   }, [count]);
 
-  // Textura circular nítida generada en canvas
   const texture = useMemo(() => {
     const size = 128;
     const canvas = document.createElement('canvas');
     canvas.width = canvas.height = size;
     const ctx = canvas.getContext('2d')!;
-
     const gradient = ctx.createRadialGradient(
       size / 2,
       size / 2,
@@ -67,10 +63,8 @@ const Particles: React.FC<ParticleProps> = ({
     gradient.addColorStop(0.1, 'rgba(255,255,255,0.9)');
     gradient.addColorStop(0.25, 'rgba(255,255,255,0.4)');
     gradient.addColorStop(1, 'rgba(255,255,255,0)');
-
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, size, size);
-
     const texture = new THREE.CanvasTexture(canvas);
     texture.anisotropy = 16;
     texture.minFilter = THREE.LinearFilter;
@@ -79,27 +73,22 @@ const Particles: React.FC<ParticleProps> = ({
     return texture;
   }, []);
 
-  // Animación de partículas
   useFrame(({ clock }) => {
     const time = clock.getElapsedTime();
     if (!pointsRef.current) return;
-
     const positions = pointsRef.current.geometry.attributes
       .position as THREE.BufferAttribute;
     const array = positions.array as Float32Array;
 
-    // Movimiento ondulante
     for (let i = 0; i < count; i++) {
       const i3 = i * 3;
       array[i3 + 1] += Math.sin(time * randomSpeeds[i] + array[i3]) * 0.002;
     }
     positions.needsUpdate = true;
 
-    // Interacción con mouse solo si hay movimiento
     pointsRef.current.rotation.y = mouseX * 0.3;
     pointsRef.current.rotation.x = mouseY * 0.3;
 
-    // Pulso dinámico en tamaño
     const material = pointsRef.current.material as THREE.PointsMaterial;
     material.size = size + Math.sin(time * 2) * 0.02;
   });
@@ -118,10 +107,10 @@ const Particles: React.FC<ParticleProps> = ({
       <pointsMaterial
         map={texture}
         color={color}
-        size={size}
+        size={size} // tamaño base más grande
         sizeAttenuation
         transparent
-        opacity={4}
+        opacity={4} // más brillante
         blending={THREE.AdditiveBlending}
         depthWrite={false}
         alphaTest={0.01}
@@ -133,17 +122,84 @@ const Particles: React.FC<ParticleProps> = ({
 
 const Hero3D: React.FC = () => {
   const { x, y, handleMouseEnter, handleMouseLeave } = useMouseEffect();
+  const heroRef = useRef<HTMLDivElement>(null);
+
+  // Bloquea scroll solo dentro del Hero en mobile
+  useEffect(() => {
+    const hero = heroRef.current;
+    if (!hero) return;
+
+    const preventScroll = (e: TouchEvent) => {
+      if (window.innerWidth < 768) {
+        // Solo en mobile
+        const rect = hero.getBoundingClientRect();
+        const insideHero =
+          e.touches[0].clientY > rect.top && e.touches[0].clientY < rect.bottom;
+        if (insideHero) e.preventDefault();
+      }
+    };
+
+    hero.addEventListener('touchmove', preventScroll, { passive: false });
+    return () => hero.removeEventListener('touchmove', preventScroll);
+  }, []);
+
+  // Control táctil para mover partículas
+  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    const touch = e.touches[0];
+    const rect = e.currentTarget.getBoundingClientRect();
+    const mouseX = ((touch.clientX - rect.left) / rect.width) * 2 - 1;
+    const mouseY = -((touch.clientY - rect.top) / rect.height) * 2 + 1;
+    document.dispatchEvent(
+      new CustomEvent('mousemove', { detail: { x: mouseX, y: mouseY } })
+    );
+  };
+
+  const scrollToSection = () => {
+    const target = document.getElementById('proposalId');
+    if (!target) return;
+
+    const startY = window.scrollY;
+    const targetY = target.getBoundingClientRect().top + startY - 40;
+    const distance = targetY - startY;
+    const duration = 1200;
+    let startTime: number | null = null;
+
+    const easeInOutExpo = (t: number) =>
+      t === 0
+        ? 0
+        : t === 1
+        ? 1
+        : t < 0.5
+        ? Math.pow(2, 20 * t - 10) / 2
+        : (2 - Math.pow(2, -20 * t + 10)) / 2;
+
+    const animateScroll = (currentTime: number) => {
+      if (startTime === null) startTime = currentTime;
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = easeInOutExpo(progress);
+      window.scrollTo(0, startY + distance * eased);
+
+      if (progress < 1) {
+        requestAnimationFrame(animateScroll);
+      } else {
+        window.scrollBy({ top: -10, behavior: 'smooth' });
+        setTimeout(() => window.scrollBy({ top: 10, behavior: 'smooth' }), 150);
+      }
+    };
+    requestAnimationFrame(animateScroll);
+  };
 
   return (
     <div
+      ref={heroRef}
       className="w-full h-screen relative"
+      onTouchMove={handleTouchMove}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      {/* Fondo animado */}
       <div className={styles.heroBackground}></div>
 
-      {/* Canvas 3D */}
       <Canvas camera={{ position: [0, 0, 15], fov: 75 }}>
         <ambientLight intensity={0.5} />
         <directionalLight position={[10, 10, 10]} intensity={1} />
@@ -159,65 +215,12 @@ const Hero3D: React.FC = () => {
         <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={0.2} />
       </Canvas>
 
-      {/* Overlay con texto */}
       <div className={styles.heroOverlay}>
         <h1 className={styles.heroTitle}>ZENTYK</h1>
         <p className={styles.heroSubtitle}>
           Tecnología guiada por conocimiento
         </p>
-        <button
-          className={styles.heroButton}
-          onClick={(e) => {
-            e.preventDefault();
-
-            // Aseguramos que el click no se bloquee por el Canvas
-            e.stopPropagation();
-
-            const target = document.getElementById('proposalId');
-            if (!target) {
-              console.warn('No se encontró el elemento con id="proposalId"');
-              return;
-            }
-
-            const startY = window.scrollY;
-            const targetY = target.getBoundingClientRect().top + startY - 40; // pequeño offset
-            const distance = targetY - startY;
-            const duration = 1200; // duración del scroll (ms)
-            let startTime: number | null = null;
-
-            // Función de easing "expo" profesional (aceleración y desaceleración suave)
-            const easeInOutExpo = (t: number) =>
-              t === 0
-                ? 0
-                : t === 1
-                ? 1
-                : t < 0.5
-                ? Math.pow(2, 20 * t - 10) / 2
-                : (2 - Math.pow(2, -20 * t + 10)) / 2;
-
-            // Animación frame a frame
-            const animateScroll = (currentTime: number) => {
-              if (startTime === null) startTime = currentTime;
-              const elapsed = currentTime - startTime;
-              const progress = Math.min(elapsed / duration, 1);
-              const eased = easeInOutExpo(progress);
-              window.scrollTo(0, startY + distance * eased);
-
-              if (progress < 1) {
-                requestAnimationFrame(animateScroll);
-              } else {
-                // Pequeño efecto de rebote al final del scroll
-                window.scrollBy({ top: -10, behavior: 'smooth' });
-                setTimeout(
-                  () => window.scrollBy({ top: 10, behavior: 'smooth' }),
-                  150
-                );
-              }
-            };
-
-            requestAnimationFrame(animateScroll);
-          }}
-        >
+        <button className={styles.heroButton} onClick={scrollToSection}>
           Conócenos
         </button>
       </div>

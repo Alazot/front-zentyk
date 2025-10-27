@@ -24,7 +24,7 @@ export default function ArchitectureDiagram() {
             strokeWidth="4"
             strokeDasharray="12 12"
           />
-          {/* Punto animado ida */}
+          {/* Punto azul (ida) */}
           <circle
             r="8"
             fill="#3b82f6"
@@ -44,7 +44,7 @@ export default function ArchitectureDiagram() {
             strokeWidth="4"
             strokeDasharray="12 12"
           />
-          {/* Punto animado vuelta */}
+          {/* Punto rojo (vuelta) */}
           <circle
             r="8"
             fill="#ef4444"
@@ -55,9 +55,9 @@ export default function ArchitectureDiagram() {
           />
         </svg>
 
-        {/* Versión responsive de las líneas (mobile) */}
+        {/* SVG animado - Mobile */}
         <svg
-          className="md:hidden absolute w-[80%] h-[300px]"
+          className="md:hidden absolute w-[80%] h-[320px]"
           viewBox="0 0 300 600"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -72,13 +72,24 @@ export default function ArchitectureDiagram() {
             strokeWidth="3"
             strokeDasharray="10 10"
           />
-          {/* Punto animado descendente */}
+
+          {/* Punto azul (sube) */}
           <circle
             r="6"
             fill="#3b82f6"
             style={{
+              offsetPath: 'path("M150 600 L150 0")',
+              animation: 'moveDotUp 2.5s linear infinite',
+            }}
+          />
+
+          {/* Punto rojo (baja) */}
+          <circle
+            r="6"
+            fill="#ef4444"
+            style={{
               offsetPath: 'path("M150 0 L150 600")',
-              animation: 'moveDotVertical 3s linear infinite',
+              animation: 'moveDotDown 2.5s linear infinite',
             }}
           />
         </svg>
@@ -146,7 +157,16 @@ export default function ArchitectureDiagram() {
           }
         }
 
-        @keyframes moveDotVertical {
+        @keyframes moveDotUp {
+          0% {
+            offset-distance: 0%;
+          }
+          100% {
+            offset-distance: 100%;
+          }
+        }
+
+        @keyframes moveDotDown {
           0% {
             offset-distance: 0%;
           }
