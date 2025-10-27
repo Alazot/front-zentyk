@@ -3,6 +3,7 @@ import ServicesCard from './src/components/ServicesCard/ServicesCard';
 import SkillsCarrousel from './src/components/SkillsCard/SkillsCarrousel';
 import ProposalCard from './src/components/proposalCard/ProposalCard';
 import ArchitectureDiagram from './src/components/ArchitectureDiagram/ArchitectureDiagram';
+import React from 'react';
 const servicesCardsOne = [
   {
     title: 'Desarrollo Web',
