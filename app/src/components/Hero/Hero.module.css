@@ -2,22 +2,31 @@
 .heroBackground {
   position: absolute;
   inset: 0;
-  z-index: 0; /* detrás de overlay */
+  z-index: 0; /* detrás del overlay */
   background: linear-gradient(270deg, #0b1f3f, #00d1ff, #ffd700, #0b1f3f);
-  background-size: 800% 800%; /* para animación suave */
-  animation: gradientAnimation 20s ease infinite;
+  background-size: 800% 800%;
+  animation: gradientAnimation 35s ease-in-out infinite; /* más lento y con pausa */
 }
 
-/* Animación de gradiente */
+/* Animación de gradiente — permanece más tiempo en oscuro */
 @keyframes gradientAnimation {
   0% {
     background-position: 0% 50%;
   }
+  20% {
+    background-position: 0% 50%; /* 🌑 Mantiene el tono oscuro */
+  }
+  35% {
+    background-position: 100% 50%; /* ☀️ Transición rápida hacia dorado */
+  }
   50% {
-    background-position: 100% 50%;
+    background-position: 100% 50%; /* breve pausa luminosa */
+  }
+  65% {
+    background-position: 0% 50%; /* 🌙 Transición de regreso */
   }
   100% {
-    background-position: 0% 50%;
+    background-position: 0% 50%; /* 🌑 Mantiene el tono oscuro */
   }
 }
 
