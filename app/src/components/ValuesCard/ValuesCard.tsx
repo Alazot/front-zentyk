@@ -1,41 +1,8 @@
 'use client';
 
+import { valuesCards } from '@/common/objects/valuesImages';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import React from 'react';
-
-const valuesCards = [
-  {
-    title: 'Conocimiento',
-    description: 'La base de cada decisión y cada estrategia.',
-    image: '/images/values/knowledge.jpg',
-  },
-  {
-    title: 'Claridad',
-    description: 'Comunicamos y construimos con transparencia y propósito.',
-    image: '/images/values/clarity.png',
-  },
-  {
-    title: 'Evolución',
-    description: 'Aprendemos de cada experiencia para mejorar continuamente.',
-    image: '/images/values/evolution.jpg',
-  },
-  {
-    title: 'Equilibrio',
-    description: 'Buscamos armonía entre tecnología, diseño y funcionalidad.',
-    image: '/images/values/balance.png',
-  },
-  {
-    title: 'Innovación consciente',
-    description: 'Innovar no es hacer más, es hacer mejor.',
-    image: '/images/values/innovation.png',
-  },
-  {
-    title: 'Colaboración',
-    description: 'El conocimiento cobra fuerza cuando se comparte.',
-    image: '/images/values/collaboration.png',
-  },
-];
 
 export default function ValuesCard() {
   return (

@@ -5,7 +5,7 @@ import * as THREE from 'three';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 import styles from './Hero.module.css';
-import { useMouseEffect } from './../../hooks/useMouseEffect';
+import { useMouseEffect } from '@/hooks/useMouseEffect';
 
 interface ParticleProps {
   count: number;

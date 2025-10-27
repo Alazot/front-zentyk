@@ -1,6 +1,6 @@
 'use client';
 
-import { useSmoothScroll } from './../../hooks/useSmoothScroll';
+import { useSmoothScroll } from '@/hooks/useSmoothScroll';
 
 export default function Footer() {
   const { smoothScroll } = useSmoothScroll();

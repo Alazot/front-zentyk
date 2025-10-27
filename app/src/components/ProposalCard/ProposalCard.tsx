@@ -1,22 +1,15 @@
 'use client';
 
+import { iconsProposal } from '@/common/objects/valuesImages';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-
-const iconsOne = [
-  '/images/icons/ia.png',
-  '/images/icons/code.png',
-  '/images/icons/brain.png',
-  '/images/icons/network.png',
-  '/images/icons/cloud.png',
-];
 
 export default function ProposalCard() {
   return (
     <section className="relative overflow-hidden py-20 bg-white text-gray-800">
       {/* ICONOS INTERACTIVOS flotando en el fondo */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-        {iconsOne.map((icon, i) => (
+        {iconsProposal.map((icon, i) => (
           <motion.div
             key={i}
             className="absolute w-12 h-12 sm:w-16 sm:h-16 opacity-40"
