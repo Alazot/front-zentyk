@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useMemo, useEffect } from 'react';
+import { useRef, useMemo, useEffect, useState } from 'react';
 import * as THREE from 'three';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
@@ -24,6 +24,7 @@ const Particles: React.FC<ParticleProps> = ({
 }) => {
   const pointsRef = useRef<THREE.Points>(null!);
 
+  // Posiciones iniciales de partículas
   const particlesPosition = useMemo(() => {
     const positions = new Float32Array(count * 3);
     const aspect = window.innerWidth / window.innerHeight;
@@ -40,12 +41,14 @@ const Particles: React.FC<ParticleProps> = ({
     return positions;
   }, [count]);
 
+  // Velocidades aleatorias
   const randomSpeeds = useMemo(() => {
     const speeds = new Float32Array(count);
     for (let i = 0; i < count; i++) speeds[i] = Math.random() * 0.5 + 0.5;
     return speeds;
   }, [count]);
 
+  // Textura circular para las partículas
   const texture = useMemo(() => {
     const size = 128;
     const canvas = document.createElement('canvas');
@@ -73,9 +76,11 @@ const Particles: React.FC<ParticleProps> = ({
     return texture;
   }, []);
 
+  // Animación de partículas
   useFrame(({ clock }) => {
     const time = clock.getElapsedTime();
     if (!pointsRef.current) return;
+
     const positions = pointsRef.current.geometry.attributes
       .position as THREE.BufferAttribute;
     const array = positions.array as Float32Array;
@@ -86,9 +91,11 @@ const Particles: React.FC<ParticleProps> = ({
     }
     positions.needsUpdate = true;
 
+    // Rotación según mouse o touch
     pointsRef.current.rotation.y = mouseX * 0.3;
     pointsRef.current.rotation.x = mouseY * 0.3;
 
+    // Pulso dinámico (burbujas que respiran)
     const material = pointsRef.current.material as THREE.PointsMaterial;
     material.size = size + Math.sin(time * 2) * 0.02;
   });
@@ -107,31 +114,35 @@ const Particles: React.FC<ParticleProps> = ({
       <pointsMaterial
         map={texture}
         color={color}
-        size={size} // tamaño base más grande
+        size={size}
         sizeAttenuation
         transparent
-        opacity={4} // más brillante
+        opacity={4}
         blending={THREE.AdditiveBlending}
         depthWrite={false}
         alphaTest={0.01}
-        vertexColors={false}
       />
     </points>
   );
 };
 
 const Hero3D: React.FC = () => {
-  const { x, y, handleMouseEnter, handleMouseLeave } = useMouseEffect();
+  const {
+    x: mouseX,
+    y: mouseY,
+    handleMouseEnter,
+    handleMouseLeave,
+  } = useMouseEffect();
   const heroRef = useRef<HTMLDivElement>(null);
+  const [touchCoords, setTouchCoords] = useState({ x: 0, y: 0 });
 
-  // Bloquea scroll solo dentro del Hero en mobile
+  // Bloquear scroll dentro del Hero (solo mobile)
   useEffect(() => {
     const hero = heroRef.current;
     if (!hero) return;
 
     const preventScroll = (e: TouchEvent) => {
       if (window.innerWidth < 768) {
-        // Solo en mobile
         const rect = hero.getBoundingClientRect();
         const insideHero =
           e.touches[0].clientY > rect.top && e.touches[0].clientY < rect.bottom;
@@ -143,17 +154,21 @@ const Hero3D: React.FC = () => {
     return () => hero.removeEventListener('touchmove', preventScroll);
   }, []);
 
-  // Control táctil para mover partículas
+  // Movimiento táctil (actualiza coordenadas)
   const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
     const touch = e.touches[0];
     const rect = e.currentTarget.getBoundingClientRect();
-    const mouseX = ((touch.clientX - rect.left) / rect.width) * 2 - 1;
-    const mouseY = -((touch.clientY - rect.top) / rect.height) * 2 + 1;
-    document.dispatchEvent(
-      new CustomEvent('mousemove', { detail: { x: mouseX, y: mouseY } })
-    );
+    const x = ((touch.clientX - rect.left) / rect.width) * 2 - 1;
+    const y = -((touch.clientY - rect.top) / rect.height) * 2 + 1;
+    setTouchCoords({ x, y });
   };
 
+  // Detecta si es mobile y selecciona fuente de coordenadas
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const finalX = isMobile ? touchCoords.x : mouseX;
+  const finalY = isMobile ? touchCoords.y : mouseY;
+
+  // Scroll suave al presionar “Conócenos”
   const scrollToSection = () => {
     const target = document.getElementById('proposalId');
     if (!target) return;
@@ -180,13 +195,9 @@ const Hero3D: React.FC = () => {
       const eased = easeInOutExpo(progress);
       window.scrollTo(0, startY + distance * eased);
 
-      if (progress < 1) {
-        requestAnimationFrame(animateScroll);
-      } else {
-        window.scrollBy({ top: -10, behavior: 'smooth' });
-        setTimeout(() => window.scrollBy({ top: 10, behavior: 'smooth' }), 150);
-      }
+      if (progress < 1) requestAnimationFrame(animateScroll);
     };
+
     requestAnimationFrame(animateScroll);
   };
 
@@ -198,8 +209,10 @@ const Hero3D: React.FC = () => {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
+      {/* Fondo animado */}
       <div className={styles.heroBackground}></div>
 
+      {/* Canvas 3D */}
       <Canvas camera={{ position: [0, 0, 15], fov: 75 }}>
         <ambientLight intensity={0.5} />
         <directionalLight position={[10, 10, 10]} intensity={1} />
@@ -208,13 +221,14 @@ const Hero3D: React.FC = () => {
           count={1000}
           size={0.1}
           color="#00D1FF"
-          mouseX={x}
-          mouseY={y}
+          mouseX={finalX}
+          mouseY={finalY}
         />
 
         <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={0.2} />
       </Canvas>
 
+      {/* Overlay con texto y botón */}
       <div className={styles.heroOverlay}>
         <h1 className={styles.heroTitle}>ZENTYK</h1>
         <p className={styles.heroSubtitle}>
