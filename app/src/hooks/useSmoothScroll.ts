@@ -5,7 +5,7 @@ export function useSmoothScroll() {
 
     // Posiciones
     const startY = window.scrollY;
-    const targetY = target.getBoundingClientRect().top + startY - offset; // 👈 offset visible arriba
+    const targetY = target.getBoundingClientRect().top + startY - offset;
     const distance = targetY - startY;
     const duration = 1200;
     let startTime: number | null = null;
