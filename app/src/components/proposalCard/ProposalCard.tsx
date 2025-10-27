@@ -3,34 +3,6 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 
-const valuesCards = [
-  {
-    title: 'Conocimiento',
-    description: 'La base de cada decisión y cada estrategia.',
-    image: '/images/values/knowledge.jpg',
-  },
-  {
-    title: 'Claridad',
-    description: 'Comunicamos y construimos con transparencia y propósito.',
-    image: '/images/values/clarity.png',
-  },
-  {
-    title: 'Evolución',
-    description: 'Aprendemos de cada experiencia para mejorar continuamente.',
-    image: '/images/values/evolution.jpg',
-  },
-  {
-    title: 'Equilibrio',
-    description: 'Buscamos armonía entre tecnología, diseño y funcionalidad.',
-    image: '/images/values/balance.png',
-  },
-  {
-    title: 'Innovación consciente',
-    description: 'Innovar no es hacer más, es hacer mejor.',
-    image: '/images/values/innovation.png',
-  },
-];
-
 const iconsOne = [
   '/images/icons/ia.png',
   '/images/icons/code.png',
@@ -38,8 +10,6 @@ const iconsOne = [
   '/images/icons/network.png',
   '/images/icons/cloud.png',
 ];
-
-const iconsTwo = ['/images/icons/cloud.png'];
 
 export default function ProposalCard() {
   return (
@@ -58,10 +28,13 @@ export default function ProposalCard() {
               delay: i * 0.6,
               ease: 'easeInOut',
             }}
-            style={{
-              left: `${12 + i * 18}%`,
-              top: `${14 + (i % 1) * 30}%`,
-            }}
+            style={
+              {
+                left: `${12 + i * 18}%`,
+                top: `${32 + (i % 1) * 30}%`,
+                position: 'absolute',
+              } as React.CSSProperties
+            }
           >
             <Image
               src={icon}
@@ -123,38 +96,6 @@ export default function ProposalCard() {
             soluciones que generen valor real.
           </p>
         </motion.div>
-      </div>
-
-      {/* VALORES */}
-      <div className="max-w-6xl mx-auto mt-36 px-6 relative z-10">
-        <h3 className="text-3xl font-semibold text-center mb-12 text-black-600">
-          Nuestros Valores
-        </h3>
-
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-10">
-          {valuesCards.map((valor, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="group relative bg-white rounded-2xl p-6 text-center border border-gray-200 hover:border-black-400 transition-all shadow-sm hover:shadow-lg"
-            >
-              <div className="relative w-20 h-20 mx-auto mb-4">
-                <Image
-                  src={valor.image}
-                  alt={valor.title}
-                  fill
-                  className="object-contain group-hover:scale-110 transition-transform duration-500"
-                />
-              </div>
-              <h4 className="text-xl font-semibold text-black-600 mb-2">
-                {valor.title}
-              </h4>
-              <p className="text-gray-600 text-sm">{valor.description}</p>
-            </motion.div>
-          ))}
-        </div>
       </div>
     </section>
   );

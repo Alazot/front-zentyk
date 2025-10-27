@@ -1,9 +1,11 @@
 import Hero3D from './src/components/Hero/Hero3D';
 import ServicesCard from './src/components/ServicesCard/ServicesCard';
 import SkillsCarrousel from './src/components/SkillsCard/SkillsCarrousel';
-import ProposalCard from './src/components/proposalCard/ProposalCard';
+import ProposalCard from './src/components/ProposalCard/ProposalCard';
+import ValuesCard from './src/components/ValuesCard/ValuesCard';
 import ArchitectureDiagram from './src/components/ArchitectureDiagram/ArchitectureDiagram';
-import React from 'react';
+import Footer from './src/components/Footer/Footer';
+
 const servicesCardsOne = [
   {
     title: 'Desarrollo Web',
@@ -161,42 +163,54 @@ const HomePage = () => {
       {/* Hero interactivo */}
       <Hero3D />
       {/* Sección de servicios */}
-      <div>
-        <h2 className="text-4xl font-bold mt-24 mb-0 text-center">
-          Nuestra Propuesta
-        </h2>
-        <ProposalCard />
-      </div>
+      <section id="proposalId">
+        <div>
+          <h2 className="text-4xl font-bold mt-24 mb-0 text-center">
+            Nuestra Propuesta
+          </h2>
+          <ProposalCard />
+        </div>
+      </section>
+
+      <section id="valuesId">
+        <div>
+          <h2 className="text-4xl font-bold mt-24 text-center">Valores</h2>
+          <ValuesCard />
+        </div>
+      </section>
+
       {/* Sección de servicios */}
-      <div>
-        <h2 className="text-4xl font-bold mt-12 mb-12 text-center">
-          Nuestros Servicios
-        </h2>
-        <ServicesCard services={servicesCardsOne} />
-        <ServicesCard services={servicesCardsTwo} />
-      </div>
-
+      <section id="servicesId">
+        <div>
+          <h2 className="text-4xl font-bold mt-12 mb-12 text-center">
+            Nuestros Servicios
+          </h2>
+          <ServicesCard services={servicesCardsOne} />
+          <ServicesCard services={servicesCardsTwo} />
+        </div>
+      </section>
       {/* Sección de skills */}
-      <div>
-        <h2 className="text-4xl font-bold mt-24 mb-2 text-center text-gray-900">
-          Tecnologías
-        </h2>
-        {/* Aquí insertas el diagrama animado */}
-        <ArchitectureDiagram />
-        <SkillsCarrousel
-          skills={[
-            ...skillsCardsFront,
-            ...skillsCardsBack,
-            ...skillsCardsDB,
-            ...skillsCardsCloud,
-            ...skillsCardsRepository,
-          ]}
-          titleSection={''}
-        />
-      </div>
-
+      <section id="tecnologiesId">
+        <div>
+          <h2 className="text-4xl font-bold mt-24 mb-2 text-center text-gray-900">
+            Tecnologías
+          </h2>
+          {/* Aquí insertas el diagrama animado */}
+          <ArchitectureDiagram />
+          <SkillsCarrousel
+            skills={[
+              ...skillsCardsFront,
+              ...skillsCardsBack,
+              ...skillsCardsDB,
+              ...skillsCardsCloud,
+              ...skillsCardsRepository,
+            ]}
+            titleSection={''}
+          />
+        </div>
+      </section>
       {/* Sección de contacto */}
-      <section id="contact" className="max-w-7xl mt-36 mx-auto my-20 px-6">
+      <section id="contactId" className="max-w-7xl mt-36 mx-auto my-20 px-6">
         <h2 className="text-4xl font-bold mt-24 mb-24 text-center text-gray-900">
           Contacto
         </h2>
@@ -220,6 +234,8 @@ const HomePage = () => {
           </button>
         </form>
       </section>
+
+      <Footer />
     </div>
   );
 };

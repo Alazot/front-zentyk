@@ -165,7 +165,61 @@ const Hero3D: React.FC = () => {
         <p className={styles.heroSubtitle}>
           Tecnología guiada por conocimiento
         </p>
-        <button className={styles.heroButton}>Conócenos</button>
+        <button
+          className={styles.heroButton}
+          onClick={(e) => {
+            e.preventDefault();
+
+            // Aseguramos que el click no se bloquee por el Canvas
+            e.stopPropagation();
+
+            const target = document.getElementById('proposalId');
+            if (!target) {
+              console.warn('No se encontró el elemento con id="proposalId"');
+              return;
+            }
+
+            const startY = window.scrollY;
+            const targetY = target.getBoundingClientRect().top + startY - 40; // pequeño offset
+            const distance = targetY - startY;
+            const duration = 1200; // duración del scroll (ms)
+            let startTime: number | null = null;
+
+            // Función de easing "expo" profesional (aceleración y desaceleración suave)
+            const easeInOutExpo = (t: number) =>
+              t === 0
+                ? 0
+                : t === 1
+                ? 1
+                : t < 0.5
+                ? Math.pow(2, 20 * t - 10) / 2
+                : (2 - Math.pow(2, -20 * t + 10)) / 2;
+
+            // Animación frame a frame
+            const animateScroll = (currentTime: number) => {
+              if (startTime === null) startTime = currentTime;
+              const elapsed = currentTime - startTime;
+              const progress = Math.min(elapsed / duration, 1);
+              const eased = easeInOutExpo(progress);
+              window.scrollTo(0, startY + distance * eased);
+
+              if (progress < 1) {
+                requestAnimationFrame(animateScroll);
+              } else {
+                // Pequeño efecto de rebote al final del scroll
+                window.scrollBy({ top: -10, behavior: 'smooth' });
+                setTimeout(
+                  () => window.scrollBy({ top: 10, behavior: 'smooth' }),
+                  150
+                );
+              }
+            };
+
+            requestAnimationFrame(animateScroll);
+          }}
+        >
+          Conócenos
+        </button>
       </div>
     </div>
   );
