@@ -1,65 +1,226 @@
-import Image from "next/image";
+import Hero3D from './src/components/Hero/Hero3D';
+import ServicesCard from './src/components/ServicesCard/ServicesCard';
+import SkillsCarrousel from './src/components/SkillsCard/SkillsCarrousel';
+import ProposalCard from './src/components/proposalCard/ProposalCard';
+import ArchitectureDiagram from './src/components/ArchitectureDiagram/ArchitectureDiagram';
+const servicesCardsOne = [
+  {
+    title: 'Desarrollo Web',
+    image: '/images/services/web.webp',
+    description: 'Creamos sitios modernos, optimizados y escalables.',
+  },
+  {
+    title: 'Aplicaciones Móviles',
+    image: '/images/services/mobile.png',
+    description: 'Diseñamos apps intuitivas para Android y iOS.',
+  },
+  {
+    title: 'Consultoría TI',
+    image: '/images/services/consulting.jpeg',
+    description: 'Te ayudamos a definir estrategias tecnológicas efectivas.',
+  },
+];
 
-export default function Home() {
+const servicesCardsTwo = [
+  {
+    title: 'Automatización de sistemas',
+    image: '/images/services/automatizacion.jpg',
+    description: 'Mejoramos la eficiencia operativa de tu negocio.',
+  },
+  {
+    title: 'Inteligencia Artificial',
+    image: '/images/services/ia.jpg',
+    description: 'Potenciamos tus soluciones con IA.',
+  },
+  {
+    title: 'Integraciones a la Nube',
+    image: '/images/services/cloud.jpg',
+    description: 'Llevamos tu infraestructura al siguiente nivel.',
+  },
+];
+
+const skillsCardsFront = [
+  {
+    title: 'React/React-native',
+    image: '/images/skills/front/react.png',
+  },
+  {
+    title: 'Vue',
+    image: '/images/skills/front/vuejs.png',
+  },
+  {
+    title: 'Angular',
+    image: '/images/skills/front/Angularjs.png',
+  },
+  {
+    title: 'Ionic',
+    image: '/images/skills/front/ionic.png',
+  },
+  {
+    title: 'Flutter',
+    image: '/images/skills/front/flutter.svg',
+  },
+  {
+    title: '.NET',
+    image: '/images/skills/front/net.png',
+  },
+  {
+    title: 'Php',
+    image: '/images/skills/front/php.png',
+  },
+];
+
+const skillsCardsBack = [
+  {
+    title: 'Java',
+    image: '/images/skills/back/java.png',
+  },
+  {
+    title: 'Spring Boot',
+    image: '/images/skills/back/spring boot.png',
+  },
+  {
+    title: 'NodeJS',
+    image: '/images/skills/back/nodejs.webp',
+  },
+  {
+    title: 'NestJS',
+    image: '/images/skills/back/nestjs.svg',
+  },
+  {
+    title: '.Net Core',
+    image: '/images/skills/back/netCore.png',
+  },
+];
+
+const skillsCardsDB = [
+  {
+    title: 'Oracle',
+    image: '/images/skills/db/oracle.png',
+  },
+  {
+    title: 'Posgresql',
+    image: '/images/skills/db/posgresql.png',
+  },
+  {
+    title: 'Sql Server',
+    image: '/images/skills/db/sqlServer.webp',
+  },
+  {
+    title: 'MySql',
+    image: '/images/skills/db/mysql.avif',
+  },
+  {
+    title: 'MongoDB',
+    image: '/images/skills/db/mongodb.png',
+  },
+  {
+    title: 'DynamoDB',
+    image: '/images/skills/db/DynamoDB.png',
+  },
+  {
+    title: 'Firestore',
+    image: '/images/skills/db/firestore.svg',
+  },
+];
+
+const skillsCardsCloud = [
+  {
+    title: 'Aws',
+    image: '/images/skills/cloud/aws.webp',
+  },
+  {
+    title: 'Azure',
+    image: '/images/skills/cloud/azure.png',
+  },
+  {
+    title: 'Google Cloud',
+    image: '/images/skills/cloud/gcp.webp',
+  },
+];
+
+const skillsCardsRepository = [
+  {
+    title: 'Bitbucket',
+    image: '/images/skills/repositories/bitbucket.jpg',
+  },
+  {
+    title: 'GitHub',
+    image: '/images/skills/repositories/github.jpg',
+  },
+  {
+    title: 'GitLab',
+    image: '/images/skills/repositories/gitlab.png',
+  },
+];
+
+const HomePage = () => {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <div>
+      {/* Hero interactivo */}
+      <Hero3D />
+      {/* Sección de servicios */}
+      <div>
+        <h2 className="text-4xl font-bold mt-24 mb-0 text-center">
+          Nuestra Propuesta
+        </h2>
+        <ProposalCard />
+      </div>
+      {/* Sección de servicios */}
+      <div>
+        <h2 className="text-4xl font-bold mt-12 mb-12 text-center">
+          Nuestros Servicios
+        </h2>
+        <ServicesCard services={servicesCardsOne} />
+        <ServicesCard services={servicesCardsTwo} />
+      </div>
+
+      {/* Sección de skills */}
+      <div>
+        <h2 className="text-4xl font-bold mt-24 mb-2 text-center text-gray-900">
+          Tecnologías
+        </h2>
+        {/* Aquí insertas el diagrama animado */}
+        <ArchitectureDiagram />
+        <SkillsCarrousel
+          skills={[
+            ...skillsCardsFront,
+            ...skillsCardsBack,
+            ...skillsCardsDB,
+            ...skillsCardsCloud,
+            ...skillsCardsRepository,
+          ]}
+          titleSection={''}
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+      </div>
+
+      {/* Sección de contacto */}
+      <section id="contact" className="max-w-7xl mt-36 mx-auto my-20 px-6">
+        <h2 className="text-4xl font-bold mt-24 mb-24 text-center text-gray-900">
+          Contacto
+        </h2>
+        <form className="flex flex-col gap-4 mb-48">
+          <input
+            type="text"
+            placeholder="Nombre"
+            className="p-3 rounded-lg border"
+          />
+          <input
+            type="email"
+            placeholder="Email"
+            className="p-3 rounded-lg border"
+          />
+          <textarea placeholder="Mensaje" className="p-3 rounded-lg border" />
+          <button
+            type="submit"
+            className="bg-accent text-black py-3 px-6 rounded-lg font-bold"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+            Enviar
+          </button>
+        </form>
+      </section>
     </div>
   );
-}
+};
+
+export default HomePage;
