@@ -1,16 +1,15 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import React from 'react';
 import { FaServer, FaDatabase, FaDesktop } from 'react-icons/fa';
 
 export default function ArchitectureDiagram() {
   return (
     <section className="flex flex-col items-center justify-center py-16 relative">
-      <div className="relative w-full flex items-center justify-center">
-        {/* SVG con líneas rectas y puntos animados */}
+      <div className="relative w-full flex flex-col md:flex-col items-center justify-center">
+        {/* SVG animado - Desktop */}
         <svg
-          className="absolute w-full h-64"
+          className="hidden md:block absolute w-full h-64"
           viewBox="0 0 1000 300"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -56,17 +55,47 @@ export default function ArchitectureDiagram() {
           />
         </svg>
 
+        {/* Versión responsive de las líneas (mobile) */}
+        <svg
+          className="md:hidden absolute w-[80%] h-[300px]"
+          viewBox="0 0 300 600"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          {/* Línea vertical */}
+          <line
+            x1="150"
+            y1="0"
+            x2="150"
+            y2="600"
+            stroke="#9ca3af"
+            strokeWidth="3"
+            strokeDasharray="10 10"
+          />
+          {/* Punto animado descendente */}
+          <circle
+            r="6"
+            fill="#3b82f6"
+            style={{
+              offsetPath: 'path("M150 0 L150 600")',
+              animation: 'moveDotVertical 3s linear infinite',
+            }}
+          />
+        </svg>
+
         {/* BLOQUES PRINCIPALES */}
-        <div className="flex items-center justify-between w-[80%] relative z-10">
+        <div className="flex flex-col md:flex-row items-center justify-between w-full md:w-[80%] gap-10 md:gap-20 relative z-10">
           {/* FRONTEND */}
           <motion.div
             initial={{ y: 20, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.6 }}
-            className="bg-white shadow-lg rounded-2xl p-6 w-48 h-48 flex flex-col items-center justify-center hover:scale-105 transition-transform"
+            className="bg-white shadow-lg rounded-2xl p-6 w-40 h-40 md:w-48 md:h-48 flex flex-col items-center justify-center hover:scale-105 transition-transform"
           >
-            <FaDesktop className="text-blue-500 text-6xl mb-3" />
-            <p className="font-semibold text-gray-800 text-lg">Web / App</p>
+            <FaDesktop className="text-blue-500 text-5xl md:text-6xl mb-3" />
+            <p className="font-semibold text-gray-800 text-base md:text-lg">
+              Web / App
+            </p>
           </motion.div>
 
           {/* BACKEND */}
@@ -74,10 +103,12 @@ export default function ArchitectureDiagram() {
             initial={{ y: -20, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.8 }}
-            className="bg-white shadow-lg rounded-2xl p-6 w-48 h-48 flex flex-col items-center justify-center hover:scale-105 transition-transform"
+            className="bg-white shadow-lg rounded-2xl p-6 w-40 h-40 md:w-48 md:h-48 flex flex-col items-center justify-center hover:scale-105 transition-transform"
           >
-            <FaServer className="text-green-500 text-6xl mb-3" />
-            <p className="font-semibold text-gray-800 text-lg">Servicios</p>
+            <FaServer className="text-green-500 text-5xl md:text-6xl mb-3" />
+            <p className="font-semibold text-gray-800 text-base md:text-lg">
+              Servicios
+            </p>
           </motion.div>
 
           {/* BASE DE DATOS */}
@@ -85,10 +116,12 @@ export default function ArchitectureDiagram() {
             initial={{ y: 20, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
             transition={{ duration: 1 }}
-            className="bg-white shadow-lg rounded-2xl p-6 w-48 h-48 flex flex-col items-center justify-center hover:scale-105 transition-transform"
+            className="bg-white shadow-lg rounded-2xl p-6 w-40 h-40 md:w-48 md:h-48 flex flex-col items-center justify-center hover:scale-105 transition-transform"
           >
-            <FaDatabase className="text-yellow-500 text-6xl mb-3" />
-            <p className="font-semibold text-gray-800 text-lg">Base de Datos</p>
+            <FaDatabase className="text-yellow-500 text-5xl md:text-6xl mb-3" />
+            <p className="font-semibold text-gray-800 text-base md:text-lg">
+              Base de Datos
+            </p>
           </motion.div>
         </div>
       </div>
@@ -105,6 +138,15 @@ export default function ArchitectureDiagram() {
         }
 
         @keyframes moveDotReverse {
+          0% {
+            offset-distance: 0%;
+          }
+          100% {
+            offset-distance: 100%;
+          }
+        }
+
+        @keyframes moveDotVertical {
           0% {
             offset-distance: 0%;
           }

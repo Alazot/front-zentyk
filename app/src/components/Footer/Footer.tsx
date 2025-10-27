@@ -74,7 +74,7 @@ export default function Footer() {
         </div>
 
         {/* Redes sociales */}
-        <div>
+        {/* <div>
           <h3 className="text-white font-semibold mb-3">Conecta</h3>
           <div className="flex justify-center md:justify-start gap-5">
             <a
@@ -98,7 +98,7 @@ export default function Footer() {
               <i className="fa-brands fa-instagram text-2xl"></i>
             </a>
           </div>
-        </div>
+        </div>*/}
       </div>
 
       {/* Línea divisoria */}
