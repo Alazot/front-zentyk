@@ -1,10 +1,10 @@
 import Hero3D from './src/components/Hero/Hero3D';
 import ServicesCard from './src/components/ServicesCard/ServicesCard';
 import SkillsCarrousel from './src/components/SkillsCard/SkillsCarrousel';
-import ProposalCard from './src/components/ProposalCard/ProposalCard';
 import ValuesCard from './src/components/ValuesCard/ValuesCard';
 import ArchitectureDiagram from './src/components/ArchitectureDiagram/ArchitectureDiagram';
 import Footer from './src/components/Footer/Footer';
+import ProposalCard from './src/components/ProposalCard/ProposalCard';
 
 const servicesCardsOne = [
   {
