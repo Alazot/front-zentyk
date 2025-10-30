@@ -14,6 +14,8 @@ import {
   skillsCardsRepository,
 } from '@/common/objects/valuesImages';
 import ProposalCard from '@/components/ProposalCard/ProposalCard';
+import ContactForm from '@/components/ContactForm/ContactForm';
+import ScrollTopButton from '@/components/ScrollTopButton/ScrollTopButton';
 
 const HomePage = () => {
   return (
@@ -23,7 +25,7 @@ const HomePage = () => {
       {/* Sección de servicios */}
       <section id="proposalId">
         <div>
-          <h2 className="text-4xl font-bold mt-24 mb-0 text-center">
+          <h2 className="text-4xl font-bold mt-24 text-center">
             Nuestra Propuesta
           </h2>
           <ProposalCard />
@@ -40,7 +42,7 @@ const HomePage = () => {
       {/* Sección de servicios */}
       <section id="servicesId">
         <div>
-          <h2 className="text-4xl font-bold mt-12 mb-12 text-center">
+          <h2 className="text-4xl font-bold mb-6 text-center">
             Nuestros Servicios
           </h2>
           <ServicesCard services={servicesCardsOne} />
@@ -72,26 +74,11 @@ const HomePage = () => {
         <h2 className="text-4xl font-bold mt-24 mb-24 text-center text-gray-900">
           Contacto
         </h2>
-        <form className="flex flex-col gap-4 mb-48">
-          <input
-            type="text"
-            placeholder="Nombre"
-            className="p-3 rounded-lg border"
-          />
-          <input
-            type="email"
-            placeholder="Email"
-            className="p-3 rounded-lg border"
-          />
-          <textarea placeholder="Mensaje" className="p-3 rounded-lg border" />
-          <button
-            type="submit"
-            className="bg-accent text-black py-3 px-6 rounded-lg font-bold"
-          >
-            Enviar
-          </button>
-        </form>
+        <ContactForm />
       </section>
+
+      {/* Botón flotante volver arriba */}
+      <ScrollTopButton />
 
       <Footer />
     </div>

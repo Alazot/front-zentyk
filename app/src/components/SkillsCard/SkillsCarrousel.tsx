@@ -46,7 +46,7 @@ const SkillsCarousel: React.FC<SkillProps> = ({ skills, titleSection }) => {
   }, []);
 
   return (
-    <section className="max-w-7xl mx-auto my-2 px-4 text-center relative overflow-hidden">
+    <section className="max-w-7xl mx-auto my-2 mb-48 px-4 text-center relative overflow-hidden">
       <h2 className="text-3xl font-bold mb-2 text-gray-900">{titleSection}</h2>
 
       <div className="relative w-full overflow-hidden">
