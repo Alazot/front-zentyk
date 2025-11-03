@@ -3,6 +3,32 @@
 @tailwind components;
 @tailwind utilities;
 
+/* === BLOQUEO DE INVERSION DE COLORES === */
+
+/* Previene inversión o ajustes automáticos de contraste en iOS y Safari */
+html,
+body {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+  forced-color-adjust: none !important; /* 🚫 evita inversión por modo oscuro */
+  color-scheme: light; /* informa que el sitio es modo claro */
+}
+
+/* Previene que elementos con fondos degradados o transparentes se inviertan */
+* {
+  forced-color-adjust: none !important;
+}
+
+/* Si tienes secciones oscuras personalizadas (ej: hero 3D o footer), forzamos su color explícitamente */
+section,
+footer {
+  background-color: inherit;
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
