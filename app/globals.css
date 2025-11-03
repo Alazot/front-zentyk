@@ -6,27 +6,31 @@
 /* === BLOQUEO DE INVERSION DE COLORES === */
 
 /* Previene inversión o ajustes automáticos de contraste en iOS y Safari */
+/* === BLOQUEO DE INVERSION DE COLORES === */
+
+/* Bloqueo solo para el fondo general claro */
 html,
 body {
   background-color: #ffffff !important;
   color: #000000 !important;
-  -webkit-text-size-adjust: 100%;
-  -webkit-font-smoothing: antialiased;
+  forced-color-adjust: none !important; /* evita inversión global */
+  color-scheme: light;
+}
+
+/* Permitir que secciones oscuras conserven sus colores originales */
+footer,
+section[id='hero'],
+section[id='footer'],
+section.bg-dark,
+.heroOverlay {
+  forced-color-adjust: auto !important; /* 🔓 deja que Safari use los colores reales */
+}
+
+/* Evita que elementos internos del body cambien fondo */
+* {
   -webkit-print-color-adjust: exact;
   print-color-adjust: exact;
-  forced-color-adjust: none !important; /* 🚫 evita inversión por modo oscuro */
-  color-scheme: light; /* informa que el sitio es modo claro */
-}
-
-/* Previene que elementos con fondos degradados o transparentes se inviertan */
-* {
-  forced-color-adjust: none !important;
-}
-
-/* Si tienes secciones oscuras personalizadas (ej: hero 3D o footer), forzamos su color explícitamente */
-section,
-footer {
-  background-color: inherit;
+  -webkit-font-smoothing: antialiased;
 }
 
 :root {
