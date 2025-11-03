@@ -36,7 +36,7 @@ export default function ScrollTopButton() {
           onClick={scrollToTop}
           aria-label="Volver arriba"
           className="
-            fixed bottom-24 right-8.3 z-50 bg-gradient-to-r from-[#06b6d4] to-[#3b82f6]
+            fixed bottom-24 right-8 sm:right-8 z-50 bg-gradient-to-r from-[#06b6d4] to-[#3b82f6]
             text-white p-3 rounded-full shadow-lg
             hover:scale-110 hover:shadow-xl transition-transform duration-300
           "
