@@ -6,6 +6,7 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 import styles from './Hero.module.css';
 import { useMouseEffect } from '@/hooks/useMouseEffect';
+import { motion } from 'framer-motion';
 
 interface ParticleProps {
   count: number;
@@ -230,13 +231,47 @@ const Hero3D: React.FC = () => {
 
       {/* Overlay con texto y botón */}
       <div className={styles.heroOverlay}>
-        <h1 className={styles.heroTitle}>ZENTYK</h1>
-        <p className={styles.heroSubtitle}>
+        <motion.div
+          className="flex items-center justify-center -ml-[15px] -mb-[15px]"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, ease: 'easeOut' }}
+        >
+          <motion.img
+            src="/images/icons/logo.png"
+            alt="Zentyk Logo"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, ease: 'easeOut' }}
+            className="w-20 h-20 sm:w-20 sm:h-20 -mr-[0px] object-contain drop-shadow-[0_0_1px_rgba(255,255,255,0.8)] relative -translate-y-[12px]"
+          />
+          <motion.h1
+            className={styles.heroTitle}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, ease: 'easeOut', delay: 0.1 }}
+          >
+            ZENTYK
+          </motion.h1>
+        </motion.div>
+
+        <motion.h2
+          className={styles.heroSubtitle}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, ease: 'easeOut', delay: 0.1 }}
+        >
           Tecnología guiada por conocimiento
-        </p>
-        <button className={styles.heroButton} onClick={scrollToSection}>
+        </motion.h2>
+        <motion.h2
+          className={styles.heroButton}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, ease: 'easeOut', delay: 0.1 }}
+          onClick={scrollToSection}
+        >
           Conócenos
-        </button>
+        </motion.h2>
       </div>
     </div>
   );

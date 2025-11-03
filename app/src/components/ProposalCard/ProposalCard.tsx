@@ -53,9 +53,6 @@ export default function ProposalCard() {
           nuestra búsqueda de equilibrio entre lo humano y lo tecnológico, entre
           la lógica y la inspiración.
           <br />
-          {/* <span className="block mt-4 text-black-600 font-semibold">
-            ZENTYK — Tecnología guiada por conocimiento.
-          </span> */}
         </p>
       </motion.div>
 
