@@ -52,7 +52,7 @@ const HomePage = () => {
       {/* Sección de skills */}
       <section id="tecnologiesId">
         <div>
-          <h2 className="text-4xl font-bold mt-24 mb-2 text-center text-gray-900">
+          <h2 className="text-4xl font-bold mt-24 mb-2 text-center">
             Tecnologías
           </h2>
           {/* Aquí insertas el diagrama animado */}
@@ -71,9 +71,7 @@ const HomePage = () => {
       </section>
       {/* Sección de contacto */}
       <section id="contactId" className="max-w-7xl mt-36 mx-auto my-20 px-6">
-        <h2 className="text-4xl font-bold mt-24 mb-24 text-center text-gray-900">
-          Contacto
-        </h2>
+        <h2 className="text-4xl font-bold mt-24 mb-24 text-center">Contacto</h2>
         <ContactForm />
       </section>
 
