@@ -30,7 +30,7 @@ export default function ContactForm() {
     ).trim();
 
     const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-    const messageValid = message.length >= 10;
+    const messageValid = message.length >= 5;
 
     setIsFormValid(!!name && emailValid && messageValid);
   };
@@ -86,9 +86,10 @@ export default function ContactForm() {
 
         <textarea
           name="message"
-          placeholder="Mensaje (mínimo 10 caracteres)"
+          placeholder="Mensaje (mínimo 5 caracteres)"
           className="p-3 rounded-lg border min-h-40"
           required
+          minLength={5}
           maxLength={5000}
         />
 

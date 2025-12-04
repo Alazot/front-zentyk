@@ -29,7 +29,7 @@ export async function sendContactAction(
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return { ok: false, message: 'El email no es válido.' };
     }
-    if (message.length < 10) {
+    if (message.length < 5) {
       return {
         ok: false,
         message: 'Cuéntanos un poco más en el mensaje (mín. 10 caracteres).',
